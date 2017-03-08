@@ -1,9 +1,10 @@
 body, html{
     background: #d3d3d3 no-repeat;
     font-family: 'Courier New', sans-serif;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 5px;
+    font-size: 12px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 7px;
 }
 
 h1.title {
@@ -98,6 +99,11 @@ input{
     border: 3px solid rgba(0,0,0,0);
     box-sizing: border-box;
     border-radius: 5px;
+}
+
+button{
+    font-family: 'Courier New', sans-serif;
+    font-size: 12px;
 }
 
 .button {

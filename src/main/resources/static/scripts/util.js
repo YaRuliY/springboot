@@ -114,7 +114,7 @@ var editRecord = function(id) {
             popupObject.open();
         }
     };
-    request.open("POST", url);
+    request.open("PUT", url);
     request.send();
 };
 

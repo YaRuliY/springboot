@@ -13,8 +13,7 @@ import java.util.List;
 @Controller
 public class UserController {
     private UserService userService;
-    @Autowired
-    public void setUserService(UserService userService){ this.userService = userService; }
+    @Autowired public void setUserService(UserService userService){ this.userService = userService; }
 
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     @ResponseBody public List<User> getUsers(){ return userService.findAll(); }
@@ -39,7 +38,7 @@ public class UserController {
         }
         else {
             userService.save(new User(login, pass, fio));
-            return "Hell Yeah!";
+            return "Hell Yeah!<br>You are new user!";
         }
     }
 }

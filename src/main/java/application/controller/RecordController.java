@@ -2,10 +2,10 @@ package application.controller;
 import application.model.Record;
 import application.repa.RecordService;
 import application.repa.UserService;
+import application.validation.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -45,8 +45,28 @@ public class RecordController {
             @RequestParam("email") String email,
             HttpServletRequest request){
         int userID = userService.findByLogin(request.getRemoteUser()).getId();
-        this.recordService.save(new Record(name,surname,patronymic,telephone,hometel,address,email,userID));
-        return "Record is writed";
+        telephone = telephone.trim();
+        hometel = hometel.trim();
+
+        if(name.length() < 4 || surname.length() < 4 || patronymic.length() < 4){
+            return "Input data must be more then 4 characters!";
+        }
+        else if(!(Util.validTelephoneNumber(telephone))){
+            System.out.println("telephone: "+telephone+"; " + telephone.length());
+            return "Telephone number is incorect";
+        }
+        else {
+            if(hometel.length() > 0)
+                if(!Util.validTelephoneNumber(hometel))
+                    return "Home telephone number is incorect";
+
+            if(email.length() > 0)
+                if(!Util.validEmain(email))
+                    return "E-main is incorect";
+
+            this.recordService.save(new Record(name,surname,patronymic,telephone,hometel,address,email,userID));
+            return "Record is writed";
+        }
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
@@ -55,7 +75,7 @@ public class RecordController {
         return "Record is deleted";
     }
 
-    @RequestMapping(value = "/edit/record/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/record/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public String editRecord(
             @PathVariable("id") int id,
@@ -68,8 +88,28 @@ public class RecordController {
             @RequestParam("email") String email,
             HttpServletRequest request){
         int userID = userService.findByLogin(request.getRemoteUser()).getId();
-        this.recordService.edit(id, new Record(name,surname,patronymic,telephone,hometel,address,email,userID));
-        return "Record is edited";
+        telephone = telephone.trim();
+        hometel = hometel.trim();
+
+        if(name.length() < 4 || surname.length() < 4 || patronymic.length() < 4){
+            return "Input data must be more then 4 characters!";
+        }
+        else if(!(Util.validTelephoneNumber(telephone))){
+            System.out.println("telephone: "+telephone+"; " + telephone.length());
+            return "Telephone number is incorect";
+        }
+        else {
+            if(hometel.length() > 0)
+                if(!Util.validTelephoneNumber(hometel))
+                    return "Home telephone number is incorect";
+
+            if(email.length() > 0)
+                if(!Util.validEmain(email))
+                    return "E-main is incorect";
+
+            this.recordService.edit(id, new Record(name,surname,patronymic,telephone,hometel,address,email,userID));
+            return "Record is edited";
+        }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
