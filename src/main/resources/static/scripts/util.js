@@ -24,18 +24,16 @@ var preparingRecords = function(url) {
                 row.insertCell(0).innerHTML = data[i]["name"];
                 row.insertCell(1).innerHTML = data[i]["surname"];
                 row.insertCell(2).innerHTML = data[i]["patronymic"];
-                row.insertCell(3).innerHTML = preperingTelNumber(data[i]["telephone"]);
-                console.log('data[i]["hometel"]: ' + data[i]["hometel"] + data[i]["hometel"].length);
-                row.insertCell(4).innerHTML = preperingTelNumber(data[i]["hometel"]);
+                row.insertCell(3).innerHTML = prettyingTelNumber(data[i]["telephone"]);
+                row.insertCell(4).innerHTML = prettyingTelNumber(data[i]["hometel"]);
                 row.insertCell(5).innerHTML = data[i]["address"];
                 row.insertCell(6).innerHTML = data[i]["email"];
                 var id = data[i]["id"];
-                console.log('id: '+id);
                 row.insertCell(7).innerHTML =
                     "<input class=\"delete\" type=\"button\" value=\"(D)\" onclick=\"deleteRecord(" + id + ")\"/>";
-                var prepurl = "document.location.href=" + "'/edit/" + id + "'";
+                var pUrl = "document.location.href=" + "'/edit/" + id + "'";
                 row.insertCell(8).innerHTML =
-                    "<input class=\"delete\" type=\"button\" value=\"(E)\" onClick=\"" + prepurl + "\"/>";
+                    "<input class=\"delete\" type=\"button\" value=\"(E)\" onClick=\"" + pUrl + "\"/>";
             }
         }
     };
@@ -59,16 +57,8 @@ var deleteRecord = function(id) {
 
 var doSearch = function(){
     var url =  "/search/" + document.getElementById("searchbox").value.toString();
-    if(url != ''){
-        var request = new XMLHttpRequest;
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200){
-                preparingRecords(url);
-            }
-        };
-        request.open("GET", url);
-        request.send();
-    }
+    if(document.getElementById("searchbox").value.toString().length > 0)
+        preparingRecords(url);
     else preparingRecords(getRecordsURL);
 };
 
@@ -145,9 +135,10 @@ var saveUser = function() {
     request.send();
 };
 
-var preperingTelNumber = function(num){
+var prettyingTelNumber = function(num){
     if(num.length > 0){
         num = num.substr(0, 3) + '(' + num.substr(3, 2) + ')' + num.substr(5, num.length);
         return '+' + num;
     }
+    else return num;
 };

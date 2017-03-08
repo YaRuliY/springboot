@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.File;
@@ -19,10 +20,13 @@ import java.util.List;
 
 @Service
 @Transactional
+@ConfigurationProperties(prefix = "json")
 public class JSONRepository{
-    private final String source = "maindb.json";
+    private String fileSource;
     private Warehouse warehouse;
     public Warehouse getWarehouse(){ return warehouse; }
+    public String getFileSource(){ return fileSource; }
+    public void setFileSource(String fileSource){ this.fileSource = fileSource; }
     public JSONRepository(){
         try{ readFromFile(); }
         catch (IOException e){ e.printStackTrace(); }
@@ -68,14 +72,15 @@ public class JSONRepository{
     public void persisteIntoFile() throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(new JsonParser().parse(gson.toJsonTree(warehouse).toString()));
-        Files.write(Paths.get(this.source), json.getBytes());
+        Files.write(Paths.get(this.fileSource), json.getBytes());
     }
 
     public void readFromFile() throws IOException {
+        if(this.fileSource == null) this.fileSource = "maindb.json";
         try {
-            this.warehouse = new Gson().fromJson(new JsonReader(new FileReader(this.source)), Warehouse.class);
+            this.warehouse = new Gson().fromJson(new JsonReader(new FileReader(this.fileSource)), Warehouse.class);
         } catch (FileNotFoundException e) {
-            boolean flag = new File(this.source).createNewFile();
+            boolean flag = new File(this.fileSource).createNewFile();
             String structure =
                     "{\n" +
                     "  \"records\": [\n" +
@@ -83,7 +88,7 @@ public class JSONRepository{
                     "  \"users\": [\n" +
                     "  ]\n" +
                     "}";
-            Files.write(Paths.get(this.source), structure.getBytes());
+            Files.write(Paths.get(this.fileSource), structure.getBytes());
             if(flag) readFromFile();
         }
     }

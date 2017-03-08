@@ -1,5 +1,6 @@
 package application.controller;
 import application.data.json.JSONRecordService;
+import application.data.json.JSONUserService;
 import application.model.Record;
 import application.data.service.RecordService;
 import application.data.service.UserService;
@@ -13,10 +14,10 @@ import java.util.List;
 @Controller
 public class RecordController {
     private /*RecordService*/JSONRecordService recordService;
-    private UserService userService;
+    private /*UserService*/JSONUserService userService;
 
     @Autowired public void setRecordService(/*RecordService*/JSONRecordService recordService) { this.recordService = recordService; }
-    @Autowired public void setUserService(UserService userService) { this.userService = userService; }
+    @Autowired public void setUserService(JSONUserService userService) { this.userService = userService; }
 
     @RequestMapping(value = "/get/records", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody List<Record> getRecords(HttpServletRequest request) {

@@ -34,7 +34,10 @@ public class JSONUserService implements IUserService{
 
     @Override
     public void save(User user) {
-        try{ this.repository.saveUser(user); }
+        try{
+            user.setId(this.getAllUsers().size() + 1);
+            this.repository.saveUser(user);
+        }
         catch (IOException e){ e.printStackTrace(); }
     }
 }
