@@ -1,4 +1,5 @@
 package application.controller;
+import application.data.json.JSONUserService;
 import application.data.service.UserService;
 import application.model.User;
 import application.validation.Util;
@@ -12,8 +13,8 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    private UserService userService;
-    @Autowired public void setUserService(UserService userService){ this.userService = userService; }
+    private /*UserService*/JSONUserService userService;
+    @Autowired public void setUserService(JSONUserService userService){ this.userService = userService; }
 
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     @ResponseBody public List<User> getUsers(){ return userService.getAllUsers(); }

@@ -16,5 +16,5 @@ public class PageController {
     public String add(){ return "add"; }
 
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(){ return "editRecord"; }
+    public String edit(){ return "edit"; }
 }

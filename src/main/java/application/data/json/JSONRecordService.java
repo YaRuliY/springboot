@@ -4,7 +4,7 @@ import application.data.service.IRecordService;
 import application.model.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public class JSONRecordService implements IRecordService{
             all.addAll(this.repository.findAllRecords().stream().filter(
                     record -> record.getUser_id() == userID).collect(Collectors.toList()));
         }
-        catch (FileNotFoundException e){ e.printStackTrace(); }
+        catch (IOException e){ e.printStackTrace(); }
         return all;
     }
 
@@ -38,11 +38,30 @@ public class JSONRecordService implements IRecordService{
     }
 
     @Override
-    public void save(Record record){ this.repository.saveRecord(record); }
+    public void save(Record record){
+        try {
+            record.setId(this.repository.getWarehouse().getRecords().size() + 1);
+            this.repository.saveRecord(record);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
-    public void delete(int id){ this.repository.deleteRecord(id); }
+    public void delete(int id){
+        try {
+            this.repository.deleteRecord(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
-    public void edit(int id, Record record){ this.repository.editRecord(id, record); }
+    public void edit(int id, Record record){
+        try {
+            this.repository.editRecord(id, record);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

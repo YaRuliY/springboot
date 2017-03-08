@@ -3,7 +3,7 @@ import application.model.User;
 import java.util.List;
 
 public interface IUserService {
-    List<User> findAll();
+    List<User> getAllUsers();
     User findByLogin(String login);
     void save(User user);
 }
