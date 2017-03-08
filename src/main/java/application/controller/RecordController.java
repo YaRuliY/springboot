@@ -1,7 +1,7 @@
 package application.controller;
 import application.model.Record;
-import application.repa.RecordService;
-import application.repa.UserService;
+import application.data.service.RecordService;
+import application.data.service.UserService;
 import application.validation.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

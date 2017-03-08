@@ -1,4 +1,5 @@
-package application.repa;
+package application.data.service;
+import application.data.repa.RecordRepository;
 import application.model.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,23 +10,19 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class RecordService {
+public class RecordService /*implements IRecordService*/{
     private RecordRepository recordRepository;
-    @Autowired
-    public RecordService(RecordRepository recordRepository) { this.recordRepository = recordRepository; }
-
-    public List<Record> getRecords(){
-        List<Record> all = new ArrayList<>();
-        for (Record record: this.recordRepository.findAll())
-            all.add(record);
-        return all;
-    }
+    @Autowired public RecordService(RecordRepository recordRepository) { this.recordRepository = recordRepository; }
 
     public List<Record> getRecordsByUserID(int userID){
         List<Record> all = new ArrayList<>();
         for (Record record: this.recordRepository.findAll())
             if(record.getUser_id() == userID) all.add(record);
         return all;
+    }
+
+    public List<Record> getAllRecords(){
+        return (List<Record>)this.recordRepository.findAll();
     }
 
     public Record getRecordByID(int id){ return this.recordRepository.findOne(id); }

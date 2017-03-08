@@ -1,4 +1,5 @@
-package application.repa;
+package application.data.service;
+import application.data.repa.UserRepository;
 import application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,15 +9,11 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserService{
+public class UserService /*implements IUserService*/{
     private UserRepository userRepository;
+    @Autowired public UserService(UserRepository userRepository) { this.userRepository = userRepository; }
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public List<User> findAll(){
+    public List<User> getAllUsers(){
         List<User> all = new ArrayList<>();
         for (User user: this.userRepository.findAll())
             all.add(user);

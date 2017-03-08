@@ -1,0 +1,98 @@
+{
+  "records": [
+    {
+      "id": 1,
+      "name": "1",
+      "surname": "1",
+      "patronymic": "1",
+      "telephone": "1",
+      "hometel": "1",
+      "address": "1",
+      "email": "1",
+      "user_id": 1
+    },
+    {
+      "id": 4,
+      "name": "9",
+      "surname": "dfasfasf",
+      "patronymic": "9",
+      "telephone": "9",
+      "hometel": "9",
+      "address": "9",
+      "email": "dfgdfg",
+      "user_id": 2
+    },
+    {
+      "id": 5,
+      "name": "ВИсарионович",
+      "surname": "flks;ldfksd;lfk",
+      "patronymic": "l;askda;lsda",
+      "telephone": "380968638554",
+      "hometel": "380499999999",
+      "address": "sdsdasdasd",
+      "email": "l.yaruk1993@gmail.com",
+      "user_id": 2
+    },
+    {
+      "id": 6,
+      "name": "7",
+      "surname": "7",
+      "patronymic": "7",
+      "telephone": "7",
+      "hometel": "7",
+      "address": "7",
+      "email": "7",
+      "user_id": 5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "login": "user",
+      "password": "pass",
+      "fio": "fio"
+    },
+    {
+      "id": 2,
+      "login": "yaruliy",
+      "password": "pass",
+      "fio": "Lukyanenko YV"
+    },
+    {
+      "id": 3,
+      "login": "user2",
+      "password": "pass",
+      "fio": "klasjdlaks"
+    },
+    {
+      "id": 5,
+      "login": "madnass",
+      "password": "pass",
+      "fio": "madnass"
+    },
+    {
+      "id": 6,
+      "login": "hhhhhh",
+      "password": "55555",
+      "fio": "44444"
+    },
+    {
+      "id": 7,
+      "login": "root",
+      "password": "root1",
+      "fio": "Lukyanenko YV"
+    },
+    {
+      "id": 8,
+      "login": "root2",
+      "password": "passs",
+      "fio": "Lukyanenko YV"
+    },
+    {
+      "id": 9,
+      "login": "root6",
+      "password": "passs",
+      "fio": "Lukyanenko YV"
+    }
+  ]
+}

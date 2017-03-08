@@ -1,5 +1,5 @@
 package application.controller;
-import application.repa.UserService;
+import application.data.service.UserService;
 import application.model.User;
 import application.validation.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class UserController {
     @Autowired public void setUserService(UserService userService){ this.userService = userService; }
 
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
-    @ResponseBody public List<User> getUsers(){ return userService.findAll(); }
+    @ResponseBody public List<User> getUsers(){ return userService.getAllUsers(); }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     @ResponseBody public String addUser(
