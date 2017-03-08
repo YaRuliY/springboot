@@ -75,7 +75,7 @@ public class Record {
 
     public Record(){}
     public Record(String name, String surname, String patronymic, String telephone,
-                  String hometel, String address, String email){
+                  String hometel, String address, String email, int user_id){
         this.name=name;
         this.surname = surname;
         this.patronymic=patronymic;
@@ -83,6 +83,7 @@ public class Record {
         this.hometel=hometel;
         this.address=address;
         this.email=email;
+        this.user_id=user_id;
     }
 
     public int getId() { return id; }

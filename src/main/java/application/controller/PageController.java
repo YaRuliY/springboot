@@ -2,22 +2,17 @@ package application.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/")
 public class PageController {
     @RequestMapping(value = "registration", method = RequestMethod.GET)
-    public String registration(){
-        return "registration";
-    }
+    public String registration(){ return "registration"; }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login(){
-        return "login";
-    }
-
-    @RequestMapping(value = {"main", "/"}, method = RequestMethod.GET)
-    public String main(){
+    @RequestMapping(value = {"main"}, method = RequestMethod.GET)
+    public String main(HttpServletRequest request){
+        System.out.println("User in the controller: " + request.getRemoteUser());
         return "main";
     }
 

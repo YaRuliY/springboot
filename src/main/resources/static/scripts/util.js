@@ -1,7 +1,7 @@
 var popupObject;
 var getRecordsURL = "/get/records";
 
-var preparingTasks = function(url) {
+var preparingRecords = function(url) {
     document.getElementById('table').innerHTML = '';
     var request = new XMLHttpRequest;
     request.onreadystatechange = function () {
@@ -33,7 +33,6 @@ var preparingTasks = function(url) {
                 row.insertCell(7).innerHTML =
                     "<input class=\"delete\" type=\"button\" value=\"(D)\" onclick=\"deleteRecord(" + id + ")\"/>";
                 var prepurl = "document.location.href=" + "'/edit/" + id + "'";
-                //console.log(prepurl);
                 row.insertCell(8).innerHTML =
                     "<input class=\"delete\" type=\"button\" value=\"(E)\" onClick=\"" + prepurl + "\"/>";
             }
@@ -50,7 +49,7 @@ var deleteRecord = function(id) {
         if (request.readyState == 4 && request.status == 200){
             popupObject.setMessage(request.responseText);
             popupObject.open();
-            preparingTasks(getRecordsURL);
+            preparingRecords(getRecordsURL);
         }
     };
     request.open("DELETE", url);
@@ -63,13 +62,13 @@ var doSearch = function(){
         var request = new XMLHttpRequest;
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200){
-                preparingTasks(url);
+                preparingRecords(url);
             }
         };
         request.open("GET", url);
         request.send();
     }
-    else preparingTasks(getRecordsURL);
+    else preparingRecords(getRecordsURL);
 };
 
 var saveRecord = function() {
@@ -116,5 +115,31 @@ var editRecord = function(id) {
         }
     };
     request.open("POST", url);
+    request.send();
+};
+
+var saveUser = function() {
+    if (document.getElementById("username").value.toString()=='' ||
+        document.getElementById("password").value.toString()=='' ||
+        document.getElementById("confirm").value.toString()=='' ||
+        document.getElementById("fio").value.toString()==''){
+        popupObject.setMessage('Fill out all fields');
+        popupObject.open();
+        return;
+    }
+
+    var url = '/user/add'
+        + '?username=' + document.getElementById("username").value.toString()
+        + '&password=' + document.getElementById("password").value.toString()
+        + '&confirm=' + document.getElementById("confirm").value.toString()
+        + '&fio=' + document.getElementById("fio").value.toString();
+    var request = new XMLHttpRequest;
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            popupObject.setMessage(request.responseText);
+            popupObject.open();
+        }
+    };
+    request.open('POST', url);
     request.send();
 };

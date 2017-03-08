@@ -41,6 +41,7 @@ table{
     padding: 5px ;
     margin-bottom: 9px;
     font-family: "Courier New", Courier, monospace;
+    width: 100%;
 }
 
 table tfoot tr:nth-child(odd) {background-color: white}

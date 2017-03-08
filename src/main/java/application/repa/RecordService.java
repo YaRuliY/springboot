@@ -21,20 +21,19 @@ public class RecordService {
         return all;
     }
 
-    public Record getRecordByID(int id){
-        return this.recordRepository.findOne(id);
+    public List<Record> getRecordsByUserID(int userID){
+        List<Record> all = new ArrayList<>();
+        for (Record record: this.recordRepository.findAll())
+            if(record.getUser_id() == userID) all.add(record);
+        return all;
     }
 
-    public List<Record> searchRecords(String skey){
-        return this.getRecords().stream().filter(record -> record.search(skey)).collect(Collectors.toList());
-    }
+    public Record getRecordByID(int id){ return this.recordRepository.findOne(id); }
+    public void save(Record record) { recordRepository.save(record); }
+    public void delete(int id){ recordRepository.delete(id); }
 
-    public void save(Record record){
-        recordRepository.save(record);
-    }
-
-    public void delete(int id){
-        recordRepository.delete(id);
+    public List<Record> searchRecords(String skey, int userID){
+        return this.getRecordsByUserID(userID).stream().filter(record -> record.search(skey)).collect(Collectors.toList());
     }
 
     public void edit(int id, Record record){
