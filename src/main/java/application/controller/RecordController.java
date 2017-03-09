@@ -1,9 +1,7 @@
 package application.controller;
-import application.data.json.JSONRecordService;
-import application.data.json.JSONUserService;
+import application.data.service.RecordService;
+import application.data.service.UserService;
 import application.model.Record;
-/*import application.data.service.RecordService;
-import application.data.service.UserService;*/
 import application.validation.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +11,11 @@ import java.util.List;
 
 @Controller
 public class RecordController {
-    private /*RecordService*/JSONRecordService recordService;
-    private /*UserService*/JSONUserService userService;
+    private RecordService recordService;
+    private UserService userService;
 
-    @Autowired public void setRecordService(/*RecordService*/JSONRecordService recordService) { this.recordService = recordService; }
-    @Autowired public void setUserService(/*UserService*/JSONUserService userService) { this.userService = userService; }
+    @Autowired public void setRecordService(RecordService recordService){ this.recordService = recordService; }
+    @Autowired public void setUserService(UserService userService){ this.userService = userService; }
 
     @RequestMapping(value = "/get/records", method=RequestMethod.GET, produces="application/json")
     public @ResponseBody List<Record> getRecords(HttpServletRequest request) {
@@ -29,9 +27,7 @@ public class RecordController {
     public @ResponseBody Record getRecordByID(@PathVariable("id")int id) { return recordService.getRecordByID(id); }
 
     @RequestMapping(value = "/search/{skey}", method=RequestMethod.GET, produces="application/json")
-    public @ResponseBody List<Record> searchRecords(
-            @PathVariable("skey") String skey,
-            HttpServletRequest request) {
+    public @ResponseBody List<Record> searchRecords(@PathVariable("skey") String skey, HttpServletRequest request) {
         int userID = userService.findByLogin(request.getRemoteUser()).getId();
         return recordService.searchRecords(skey, userID);
     }
@@ -72,14 +68,13 @@ public class RecordController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody String deleteRecord(@PathVariable("id") int id){
+    @ResponseBody public String deleteRecord(@PathVariable("id") int id){
         this.recordService.delete(id);
         return "Record is deleted";
     }
 
     @RequestMapping(value = "/edit/record/{id}", method = RequestMethod.PUT)
-    @ResponseBody
-    public String editRecord(
+    @ResponseBody public String editRecord(
             @PathVariable("id") int id,
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
@@ -115,8 +110,5 @@ public class RecordController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ResponseBody
-    public String hello(){
-        return "Hello!";
-    }
+    @ResponseBody public String hello(){ return "Hello!"; }
 }

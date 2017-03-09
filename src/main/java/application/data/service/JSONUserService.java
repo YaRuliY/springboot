@@ -1,20 +1,17 @@
-package application.data.json;
-import application.data.repa.JSONRepository;
-import application.data.service.IUserService;
+package application.data.service;
+import application.data.json.JSONRepository;
 import application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class JSONUserService implements IUserService{
+public class JSONUserService implements UserService {
     private JSONRepository repository;
-    @Autowired
-    public void setRepository(JSONRepository repository){ this.repository = repository; }
+    @Autowired public void setRepository(JSONRepository repository){ this.repository = repository; }
+    public JSONUserService(){}
 
-    @Override
     public List<User> getAllUsers(){
         List<User> all = new ArrayList<>();
         try{ all.addAll(this.repository.findAllUsers()); }
@@ -22,7 +19,6 @@ public class JSONUserService implements IUserService{
         return all;
     }
 
-    @Override
     public User findByLogin(String login) {
         try {
             for (User user: this.repository.findAllUsers())
@@ -32,7 +28,6 @@ public class JSONUserService implements IUserService{
         return null;
     }
 
-    @Override
     public void save(User user) {
         try{
             user.setId(this.getAllUsers().size() + 1);

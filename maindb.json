@@ -2,10 +2,10 @@
   "records": [
     {
       "id": 0,
-      "name": "sssss",
-      "surname": "ssss",
-      "patronymic": "ssss",
-      "telephone": "380968638554",
+      "name": "newName",
+      "surname": "newSurName",
+      "patronymic": "newPatronymic",
+      "telephone": "380977772233",
       "hometel": "",
       "address": "",
       "email": "",
@@ -15,9 +15,15 @@
   "users": [
     {
       "id": 1,
-      "login": "stalin",
+      "login": "root",
       "password": "passs",
       "fio": "klasjdlaks"
+    },
+    {
+      "id": 2,
+      "login": "gerasim",
+      "password": "12345",
+      "fio": "Ivanov GP"
     }
   ]
 }

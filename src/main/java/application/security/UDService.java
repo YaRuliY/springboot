@@ -1,5 +1,4 @@
 package application.security;
-import application.data.json.JSONUserService;
 import application.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,8 +13,7 @@ import java.util.List;
 
 @Service
 public class UDService implements UserDetailsService {
-    private /*UserService*/JSONUserService userService;
-    @Autowired public void setUserService(JSONUserService userService){ this.userService = userService; }
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
@@ -24,5 +22,10 @@ public class UDService implements UserDetailsService {
         gas.add(new SimpleGrantedAuthority("USER"));
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(), true, true, true, true, gas);
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

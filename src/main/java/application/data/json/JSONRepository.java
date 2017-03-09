@@ -1,4 +1,4 @@
-package application.data.repa;
+package application.data.json;
 import application.data.json.Warehouse;
 import application.model.Record;
 import application.model.User;
@@ -6,8 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,16 +21,17 @@ import java.util.List;
 
 @Service
 @Transactional
-@ConfigurationProperties(prefix = "json")
 public class JSONRepository{
+    @Value("${json.file-source}")
     private String fileSource;
     private Warehouse warehouse;
     public Warehouse getWarehouse(){ return warehouse; }
-    public String getFileSource(){ return fileSource; }
-    public void setFileSource(String fileSource){ this.fileSource = fileSource; }
-    public JSONRepository(){
+    public JSONRepository(){}
+
+    @PostConstruct
+    public void postConstruct() {
         try{ readFromFile(); }
-        catch (IOException e){ e.printStackTrace(); }
+        catch(IOException e){ e.printStackTrace(); }
     }
 
     //-----------RECORD-CRUD-------------------
@@ -76,10 +78,8 @@ public class JSONRepository{
     }
 
     public void readFromFile() throws IOException {
-        if(this.fileSource == null) this.fileSource = "maindb.json";
-        try {
-            this.warehouse = new Gson().fromJson(new JsonReader(new FileReader(this.fileSource)), Warehouse.class);
-        } catch (FileNotFoundException e) {
+        try{ this.warehouse = new Gson().fromJson(new JsonReader(new FileReader(this.fileSource)), Warehouse.class); }
+        catch (FileNotFoundException e) {
             boolean flag = new File(this.fileSource).createNewFile();
             String structure =
                     "{\n" +

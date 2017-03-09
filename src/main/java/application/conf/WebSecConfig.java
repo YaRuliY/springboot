@@ -27,7 +27,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/").permitAll()
                 .antMatchers("/get/**").permitAll()
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/json/**").permitAll()
+                .antMatchers("/propu/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/scripts/**").permitAll()
                 .antMatchers("/styles/**").permitAll()

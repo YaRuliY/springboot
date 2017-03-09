@@ -1,20 +1,16 @@
-package application.data.json;
-import application.data.repa.JSONRepository;
-import application.data.service.IRecordService;
+package application.data.service;
+import application.data.json.JSONRepository;
 import application.model.Record;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class JSONRecordService implements IRecordService{
+public class JSONRecordService implements RecordService {
     private JSONRepository repository;
     @Autowired public void setRepository(JSONRepository repository){ this.repository = repository; }
 
-    @Override
     public List<Record> getRecordsByUserID(int userID) {
         List<Record> all = new ArrayList<>();
         try {
@@ -25,19 +21,16 @@ public class JSONRecordService implements IRecordService{
         return all;
     }
 
-    @Override
     public Record getRecordByID(int id) {
         for (Record record: this.repository.getWarehouse().getRecords()){ if (record.getId() == id) return record; }
         return null;
     }
 
-    @Override
     public List<Record> searchRecords(String skey, int userID) {
         return this.getRecordsByUserID(userID).stream().filter(
                 record -> record.search(skey)).collect(Collectors.toList());
     }
 
-    @Override
     public void save(Record record){
         try {
             record.setId(this.repository.getWarehouse().getRecords().size() + 1);
@@ -47,7 +40,6 @@ public class JSONRecordService implements IRecordService{
         }
     }
 
-    @Override
     public void delete(int id){
         try {
             this.repository.deleteRecord(id);
@@ -56,7 +48,6 @@ public class JSONRecordService implements IRecordService{
         }
     }
 
-    @Override
     public void edit(int id, Record record){
         try {
             this.repository.editRecord(id, record);
