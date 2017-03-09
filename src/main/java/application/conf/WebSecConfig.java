@@ -25,6 +25,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter{
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/get/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/json/**").permitAll()
                 .antMatchers("/registration").permitAll()
@@ -33,7 +34,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter{
                 .anyRequest().authenticated()
                 .antMatchers("/main").hasRole("USER")
                 .antMatchers("/add").hasRole("USER")
-                .antMatchers("/editRecord").hasRole("USER")
+                .antMatchers("/edit").hasRole("USER")
                 .and()
                     .formLogin()
                     .loginPage("/login")
