@@ -1,5 +1,6 @@
 # springboot
-Spring Boot + JPA + Security<br>
+Spring Boot + JPA + Security
+<br><br>
 CREATE TABLE maindb.user
 (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
